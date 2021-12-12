@@ -1,22 +1,30 @@
 <script>
-  // const dispatch = createEventDispatcher();
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
   import Button from "./Button.svelte";
   import Card from "./Card.svelte";
+  import { v4 as uuid } from "uuid";
   let text = "";
   let rating = 10;
 
   $: disabled = text.trim().length <= 10;
   const handleSubmit = () => {
     if (text.trim().length > 10) {
-      let newMessage ={
-        
-      }
+      let newMessage = {
+        id: uuid(),
+        text,
+        rating,
+      };
+      dispatch("addMessage", newMessage);
+
+      text = "";
+      rating = 10;
     }
   };
 </script>
 
 <!-- markup (zero or more items) goes here -->
-<form>
+<form on:submit|preventDefault={handleSubmit}>
   <!-- 10 radio button for rating -->
   <header>
     <h2>Tell us somting about our services</h2>
@@ -30,7 +38,7 @@
           value={i + 1}
           id="rating-{i + 1}"
           on:change={(e) => {
-            rating = e.target.value;
+            rating = i + 1;
             console.log(rating);
           }}
           checked={rating === i + 1}

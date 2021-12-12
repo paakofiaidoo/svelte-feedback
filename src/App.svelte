@@ -21,22 +21,27 @@
     },
     {
       id: 4,
-      rating: 20,
+      rating: 10,
       text: "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ",
     },
   ];
 
   $: count = feedback.length;
-  $: average = feedback.reduce((a, b) => a + b.rating, 0) / count;
+  $: average = (
+    feedback.reduce((a, b) => a + b.rating, 0) / feedback.length
+  ).toFixed(1);
 
   const deleteFeedback = (e) => {
     feedback = feedback.filter((item) => e.detail !== item.id);
+  };
+  const addMessage = (e) => {
+    feedback = [e.detail, ...feedback];
   };
 </script>
 
 <main>
   <Card>
-    <Form />
+    <Form on:addMessage={addMessage} />
   </Card>
 
   <Stats {count} {average} />
