@@ -16,7 +16,6 @@
         rating,
       };
       dispatch("addMessage", newMessage);
-
       text = "";
       rating = 10;
     }

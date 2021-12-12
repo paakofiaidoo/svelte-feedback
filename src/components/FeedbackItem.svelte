@@ -1,13 +1,14 @@
 <script>
   import Card from "./Card.svelte";
-  import { createEventDispatcher } from "svelte";
+  import { store } from "../stores";
   export let item = {};
   let color = item.rating > 5 ? "green" : "yellow";
 
-  const dispatch = createEventDispatcher();
-
   const handleDelete = (id) => {
-    dispatch("delete-feedback", id);
+
+    store.update((state) => {
+      return state.filter((feedback) => feedback.id !== id);
+    });
     console.log(id);
   };
 </script>

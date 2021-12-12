@@ -1,6 +1,10 @@
 <script>
-  export let count = 0,
-    average = 0;
+  import { store } from "../stores";
+
+  $: count = $store.length;
+  $: average = (
+    $store.reduce((a, b) => a + b.rating, 0) / $store.length
+  ).toFixed(1);
 </script>
 
 <div class="stat">
@@ -9,8 +13,8 @@
 </div>
 
 <style>
-  .stat{
-      display: flex;
-      justify-content: space-between;
+  .stat {
+    display: flex;
+    justify-content: space-between;
   }
 </style>
